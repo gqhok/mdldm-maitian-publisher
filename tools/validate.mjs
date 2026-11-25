@@ -5,7 +5,7 @@ import { validate, PLATFORMS, len } from '../lib/bundle.js';
 
 const dir = process.argv[2];
 if (!dir) { console.error('用法：node tools/validate.mjs <工程目录>'); process.exit(2); }
-const b = JSON.parse(readFileSync(join(dir, 'publish.json'), 'utf8'));
+const b = JSON.parse(readFileSync(process.argv.includes('--stdin') ? 0 : join(dir, 'publish.json'), 'utf8'));
 const files = new Set();
 const walk = (d) => readdirSync(d).forEach(n => { const p = join(d, n); statSync(p).isDirectory() ? walk(p) : files.add(relative(dir, p)); });
 walk(dir);
